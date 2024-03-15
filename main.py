@@ -21,8 +21,8 @@ def solve_numerically(L, x0=1 / 2, n=100):
     :return: Solution
     """
 
-    # We divide u into n intervals of length du
-    du = L / n
+    # We divide z into n intervals of length dz
+    dz = L / n
 
     # Create lists to hold variables and equations/constraints
     x = list()  # Variables
@@ -40,7 +40,7 @@ def solve_numerically(L, x0=1 / 2, n=100):
 
         else:  # Cells 1,...,n
             # Discretized differential equations as equality constraint (using backward Euler scheme)
-            de = x[i] - x[i-1] - du * x[i] * (1 - x[i])
+            de = x[i] - x[i-1] - dz * x[i] * (1 - x[i])
             g.append(de)
 
     # Create variable and constraint vectors (for Casadi)
@@ -80,13 +80,13 @@ if __name__ == '__main__':
     x_numerical = solve_numerically(L, x0, n)
 
     # Solve analytically
-    u = np.linspace(0, L, n+1)
-    x_analytical = logistic_curve(u)
+    z = np.linspace(0, L, n + 1)
+    x_analytical = logistic_curve(z)
 
     # Plot results
     plt.figure()
-    plt.plot(u, x_numerical, label='Numerical')
-    plt.plot(u, x_analytical, '--r', label='Analytical')
+    plt.plot(z, x_numerical, label='Numerical')
+    plt.plot(z, x_analytical, '--r', label='Analytical')
     plt.legend()
     plt.show()
 
